@@ -1,22 +1,28 @@
-package app.resources;
+package app.resources.model;
 
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@Entity // passo 1 - converte esta classe para objecto relacional, ou seja cria uma tabela com estes atributos na tabela de base de dados
+@Entity // anotaçao JAP - passo 1 - converte esta classe para objecto relacional, ou seja cria uma tabela com estes atributos na tabela de base de dados
 @Table(name = "tb_user")
 public class User implements Serializable {
     // passo 2 - atribuir uma chave primaria, é so escolher um dos atributos e colocar o @ID
 
-    @Id
+    @Id // jpa
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
     private String phone;
     private String password;
+
+    @OneToMany(mappedBy = "client") // para mapear do lado do usuario e tenho que dizer o nome do atributo que esta la do outro lado da associaçao
+    // linha 20 do lado da classe Order
+    private List<Order> orders = new ArrayList<>();
 
     public User() {
 
@@ -67,6 +73,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override
