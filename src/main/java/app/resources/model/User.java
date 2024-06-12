@@ -1,5 +1,6 @@
 package app.resources.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -20,8 +21,9 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client") // para mapear do lado do usuario e tenho que dizer o nome do atributo que esta la do outro lado da associaçao
-    // linha 20 do lado da classe Order
+    // linha 22 do lado da classe Order
     private List<Order> orders = new ArrayList<>();
 
     public User() {
