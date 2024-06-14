@@ -1,4 +1,4 @@
-package app.resources.model;
+package app.resources.model.obs;
 
 public class OBS {
 
