@@ -1,7 +1,7 @@
 package app.resources.configs;
 
 import app.resources.model.*;
-import app.resources.model.OrderStatus;
+import app.resources.model.enums.OrderStatus;
 import app.resources.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -78,7 +78,7 @@ public class TestConfig implements CommandLineRunner {
         Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
         o1.setPayment(pay1);
 
-        orderRepository.save(o1); 
+        orderRepository.save(o1);
 
     }
 }

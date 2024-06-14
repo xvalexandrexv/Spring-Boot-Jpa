@@ -1,4 +1,4 @@
-package app.resources.model;
+package app.resources.model.enums;
 
 public enum OrderStatus {
 

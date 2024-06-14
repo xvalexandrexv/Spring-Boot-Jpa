@@ -27,6 +27,10 @@ public class UserService {
         return null;
     }
 
+    public User insert(User obj){
+        return repository.save(obj);
+    }
+
     public User findByName(String name) {
          return repository.findByName(name);
 

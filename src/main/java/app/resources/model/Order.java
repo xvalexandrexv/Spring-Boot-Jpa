@@ -1,5 +1,6 @@
 package app.resources.model;
 
+import app.resources.model.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -82,13 +83,20 @@ public class Order implements Serializable {
             this.orderStatus = orderStatus.getCode();
         }
     }
-
     public Payment getPayment() {
         return payment;
     }
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public Double total() {
+        double sum = 0.0;
+        for (OrderItem x : items) {
+            sum += x.getSubTotal();
+        }
+        return sum;
     }
 
     @Override
