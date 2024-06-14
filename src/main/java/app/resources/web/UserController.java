@@ -41,5 +41,11 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
     }
-    
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) { // neste caso e void pois nao vai retornar nn corpo
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
