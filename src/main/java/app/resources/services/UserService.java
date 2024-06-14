@@ -16,23 +16,23 @@ public class UserService {
     private UserRepository repository;
 
     public List<User> findAll() { // fizemos uma operaçao na camada de serviço que repassa para o repository.findall
-       return repository.findAll(); // este find all como podemos ver e da base de dados
+        return repository.findAll(); // este find all como podemos ver e da base de dados
     }
 
     public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
-        if(obj.isPresent()) {
+        if (obj.isPresent()) {
             return obj.get();
         }
         return null;
     }
 
-    public User insert(User obj){
+    public User insert(User obj) {
         return repository.save(obj);
     }
 
     public User findByName(String name) {
-         return repository.findByName(name);
+        return repository.findByName(name);
 
     }
 
@@ -42,6 +42,21 @@ public class UserService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    public User update(Long id, User obj) { // primeiro apanho o user atraves do seu ID depois
+        // modifico atraves do obj.
+
+        User entity = repository.getReferenceById(id); // diferente do findById na linha 23 ele so prepara o obj
+        // para ser utilizado o repository.findById() tras diretamente o obj de banco de dados.
+        updatedData(entity, obj);
+        return repository.save(entity);
+    }
+
+    private void updatedData(User entity, User obj) {
+        entity.setName(obj.getName());
+        entity.setEmail(obj.getEmail());
+        entity.setPhone(obj.getPhone());
     }
 
 }
