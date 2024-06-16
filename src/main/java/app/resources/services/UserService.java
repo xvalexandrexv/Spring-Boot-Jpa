@@ -2,7 +2,11 @@ package app.resources.services;
 
 import app.resources.model.User;
 import app.resources.repository.UserRepository;
+import app.resources.services.exceptions.DataBaseException;
+import app.resources.services.exceptions.ResourceNotFoundExecption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +25,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
-        if (obj.isPresent()) {
-            return obj.get();
-        }
-        return null;
+        return obj.orElseThrow(() -> new ResourceNotFoundExecption(id));
     }
 
     public User insert(User obj) {
@@ -41,7 +42,13 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundExecption(id);
+        } catch (DataIntegrityViolationException e ) {
+            throw new DataBaseException(e.getMessage());
+        }
     }
 
     public User update(Long id, User obj) { // primeiro apanho o user atraves do seu ID depois
